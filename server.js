@@ -9,13 +9,25 @@ let content = getContentTest()
 console.log(content) // Promise { <pending> }
 
 content.then(function (result) {
-    regExp = RegExp('A resposta correta é:', 'g')
+    // TODO: encontrar 'marcar questão' e exibir enunciado
+    regExpMarcarQuestao = RegExp(`Marcar
+    questão`, 'g')
+    regExpRespostaCorretaEh = RegExp('A resposta correta é:', 'g')
 
     let arrayResult
 
-    while ((arrayResult = regExp.exec(result.data)) !== null) {
-        console.log(`Found: ${arrayResult[0]}. Next starts at ${regExp.lastIndex}.`)
+    while ((arrayResult = regExpRespostaCorretaEh.exec(result.data)) !== null) {
+        let response
+        console.log(`Found: ${arrayResult[0]}`)
+        for (let i = regExpRespostaCorretaEh.lastIndex; i < regExpRespostaCorretaEh.lastIndex + 100; i++) {
+            if (result.data[i] !== '.') {
+                response += result.data[i]
+            } else {
+                break
+            }
+        }
+        console.log(response)
     }
 
-    // console.log(result.data) // "Some content"
+    // console.log(result.data) // "Some content" 
 })
